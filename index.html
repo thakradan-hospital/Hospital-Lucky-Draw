@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>จับฉลากของขวัญปีใหม่</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="/_sdk/element_sdk.js"></script>
+    <script src="/_sdk/data_sdk.js"></script>
+    <style>
+      body {
+        box-sizing: border-box;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: "Prompt", sans-serif;
+      }
+
+      .app-wrapper {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          #667eea 0%,
+          #764ba2 50%,
+          #f093fb 100%
+        );
+        position: relative;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 3rem 1.5rem;
+      }
+
+      .app-wrapper::before {
+        content: "";
+        position: fixed;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.15) 0%,
+          transparent 70%
+        );
+        animation: rotate 30s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .floating-shapes {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .shape {
+        position: absolute;
+        opacity: 0.1;
+        animation: float 20s infinite ease-in-out;
+      }
+
+      .shape:nth-child(1) {
+        top: 10%;
+        left: 10%;
+        font-size: 4rem;
+        animation-delay: 0s;
+      }
+
+      .shape:nth-child(2) {
+        top: 60%;
+        left: 80%;
+        font-size: 3rem;
+        animation-delay: 3s;
+      }
+
+      .shape:nth-child(3) {
+        top: 80%;
+        left: 20%;
+        font-size: 3.5rem;
+        animation-delay: 6s;
+      }
+
+      .shape:nth-child(4) {
+        top: 30%;
+        left: 70%;
+        font-size: 2.5rem;
+        animation-delay: 9s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        25% {
+          transform: translateY(-30px) rotate(5deg);
+        }
+        50% {
+          transform: translateY(-50px) rotate(-5deg);
+        }
+        75% {
+          transform: translateY(-30px) rotate(3deg);
+        }
+      }
+
+      .container {
+        max-width: 750px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        animation: fadeInDown 0.8s ease-out;
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .main-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin: 0 0 1rem 0;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3),
+          0 0 40px rgba(255, 255, 255, 0.3);
+        letter-spacing: 2px;
+        line-height: 1.2;
+      }
+
+      .subtitle {
+        font-size: 1.5rem;
+        color: #ffffff;
+        margin: 0;
+        opacity: 0.95;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        font-weight: 400;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 2rem;
+        padding: 2.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25),
+          0 0 0 1px rgba(255, 255, 255, 0.5);
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease-out;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .form-group {
+        margin-bottom: 2rem;
+      }
+
+      .form-label {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.5px;
+      }
+
+      .form-select {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        font-size: 1.05rem;
+        border: 3px solid #e2e8f0;
+        border-radius: 1rem;
+        background: white;
+        transition: all 0.3s;
+        font-family: "Prompt", sans-serif;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .form-select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15),
+          0 8px 25px rgba(102, 126, 234, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .draw-button {
+        width: 100%;
+        padding: 1.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border: none;
+        border-radius: 1.25rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        font-family: "Prompt", sans-serif;
+        box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4),
+          0 0 0 0 rgba(245, 87, 108, 0.5);
+        position: relative;
+        overflow: hidden;
+        letter-spacing: 1px;
+      }
+
+      .draw-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .draw-button:hover:not(:disabled)::before {
+        left: 100%;
+      }
+
+      .draw-button:hover:not(:disabled) {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(245, 87, 108, 0.5),
+          0 0 20px rgba(245, 87, 108, 0.4);
+      }
+
+      .draw-button:active:not(:disabled) {
+        transform: translateY(-2px) scale(1);
+      }
+
+      .draw-button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .results-section {
+        margin-top: 2rem;
+        animation: fadeInUp 1.2s ease-out;
+      }
+
+      .results-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        letter-spacing: 1px;
+      }
+
+      .result-item {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 1.5rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        transition: all 0.3s;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        animation: slideInLeft 0.5s ease-out backwards;
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .result-item:hover {
+        transform: translateX(10px) scale(1.02);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+      }
+
+      .result-number {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 700;
+        font-size: 1.5rem;
+        min-width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        border: 3px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .result-details {
+        flex: 1;
+      }
+
+      .result-name {
+        font-weight: 600;
+        color: #333;
+        font-size: 1.2rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .result-prize {
+        color: #666;
+        font-size: 1rem;
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 1rem;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 2rem;
+        padding: 3rem 2.5rem;
+        max-width: 450px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        animation: modalBounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border: 3px solid rgba(255, 255, 255, 0.5);
+      }
+
+      @keyframes modalBounceIn {
+        0% {
+          transform: scale(0.3);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        70% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .drawing-modal {
+        background: white;
+        border-radius: 2rem;
+        padding: 4rem 3rem;
+        max-width: 450px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        border: 3px solid rgba(255, 255, 255, 0.5);
+        position: relative;
+      }
+
+      .gift-box {
+        font-size: 10rem;
+        display: inline-block;
+        animation: shakeGift 0.5s ease-in-out infinite;
+        margin-bottom: 1.5rem;
+        filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+      }
+
+      @keyframes shakeGift {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        10% {
+          transform: rotate(-12deg) scale(1.05);
+        }
+        20% {
+          transform: rotate(12deg) scale(1.05);
+        }
+        30% {
+          transform: rotate(-12deg) scale(1.1);
+        }
+        40% {
+          transform: rotate(12deg) scale(1.1);
+        }
+        50% {
+          transform: rotate(-10deg) scale(1.05);
+        }
+        60% {
+          transform: rotate(10deg) scale(1.05);
+        }
+        70% {
+          transform: rotate(-6deg) scale(1.02);
+        }
+        80% {
+          transform: rotate(6deg) scale(1.02);
+        }
+        90% {
+          transform: rotate(-3deg) scale(1.01);
+        }
+      }
+
+      .drawing-text {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #667eea;
+        margin-bottom: 0.75rem;
+        letter-spacing: 1px;
+      }
+
+      .drawing-subtext {
+        font-size: 1.2rem;
+        color: #666;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      .sparkles {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 350px;
+        height: 350px;
+        pointer-events: none;
+      }
+
+      .sparkle {
+        position: absolute;
+        font-size: 2.5rem;
+        animation: sparkleFloat 2s ease-in-out infinite;
+        filter: drop-shadow(0 0 10px currentColor);
+      }
+
+      .sparkle:nth-child(1) {
+        top: 5%;
+        left: 5%;
+        animation-delay: 0s;
+      }
+
+      .sparkle:nth-child(2) {
+        top: 5%;
+        right: 5%;
+        animation-delay: 0.3s;
+      }
+
+      .sparkle:nth-child(3) {
+        bottom: 5%;
+        left: 5%;
+        animation-delay: 0.6s;
+      }
+
+      .sparkle:nth-child(4) {
+        bottom: 5%;
+        right: 5%;
+        animation-delay: 0.9s;
+      }
+
+      @keyframes sparkleFloat {
+        0%,
+        100% {
+          transform: translateY(0) scale(1) rotate(0deg);
+          opacity: 0.8;
+        }
+        50% {
+          transform: translateY(-25px) scale(1.3) rotate(180deg);
+          opacity: 1;
+        }
+      }
+
+      .modal-icon {
+        font-size: 5rem;
+        margin-bottom: 1.5rem;
+        animation: bounceIcon 1s ease-in-out infinite;
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+      }
+
+      @keyframes bounceIcon {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .modal-title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 1.5rem;
+        letter-spacing: 1px;
+      }
+
+      .modal-info {
+        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        border-radius: 1.5rem;
+        padding: 1.75rem;
+        margin-bottom: 2rem;
+        text-align: left;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+        border: 2px solid rgba(102, 126, 234, 0.1);
+      }
+
+      .modal-info-item {
+        margin-bottom: 1rem;
+        font-size: 1.15rem;
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+      }
+
+      .modal-info-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .modal-info-label {
+        font-weight: 700;
+        color: #667eea;
+        min-width: 80px;
+      }
+
+      .modal-info-value {
+        color: #333;
+        font-weight: 500;
+        flex: 1;
+      }
+
+      .modal-close-btn {
+        width: 100%;
+        padding: 1.25rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: white;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 1.25rem;
+        cursor: pointer;
+        font-family: "Prompt", sans-serif;
+        transition: all 0.3s;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        letter-spacing: 1px;
+      }
+
+      .modal-close-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+      }
+
+      .error-message {
+        background: linear-gradient(135deg, #fee 0%, #fdd 100%);
+        color: #c33;
+        padding: 1.25rem;
+        border-radius: 1rem;
+        margin-top: 1.5rem;
+        display: none;
+        font-weight: 500;
+        border: 2px solid rgba(204, 51, 51, 0.2);
+        box-shadow: 0 4px 15px rgba(204, 51, 51, 0.1);
+      }
+
+      .error-message.active {
+        display: block;
+        animation: shake 0.5s;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        75% {
+          transform: translateX(10px);
+        }
+      }
+
+      .loading-spinner {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+        animation: fadeInUp 1s ease-out 0.2s backwards;
+      }
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 2rem;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stat-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          circle at center,
+          rgba(255, 255, 255, 0.3) 0%,
+          transparent 70%
+        );
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .stat-card:hover::before {
+        opacity: 1;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      }
+
+      .stat-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        display: inline-block;
+        filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.1));
+      }
+
+      .stat-label {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+
+      .stat-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #333;
+        letter-spacing: 1px;
+      }
+
+      .stat-card.drawn {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .stat-card.drawn .stat-icon,
+      .stat-card.drawn .stat-label,
+      .stat-card.drawn .stat-value {
+        color: white;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .stat-card.total {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .stat-card.total .stat-icon,
+      .stat-card.total .stat-label,
+      .stat-card.total .stat-value {
+        color: white;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .stat-card.remaining {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .stat-card.remaining .stat-icon,
+      .stat-card.remaining .stat-label,
+      .stat-card.remaining .stat-value {
+        color: white;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      @media (max-width: 768px) {
+        .main-title {
+          font-size: 2.5rem;
+        }
+
+        .subtitle {
+          font-size: 1.2rem;
+        }
+
+        .card {
+          padding: 2rem;
+        }
+
+        .stats {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+  </head>
+  <body>
+    <div class="floating-shapes">
+      <div class="shape">🎁</div>
+      <div class="shape">🎉</div>
+      <div class="shape">⭐</div>
+      <div class="shape">✨</div>
+    </div>
+    <div class="app-wrapper">
+      <div class="container">
+        <div class="header">
+          <h1 class="main-title" id="mainTitle">🎁 จับฉลากของขวัญปีใหม่ 🎁</h1>
+          <p class="subtitle" id="subtitle">ลุ้นรางวัลใหญ่ประจำปี 2568</p>
+        </div>
+        <div class="card">
+          <div class="form-group">
+            <label class="form-label" for="nameSelect"
+              >เลือกชื่อผู้เข้าร่วม</label
+            >
+            <select class="form-select" id="nameSelect">
+              <option value="">-- กรุณาเลือกชื่อ --</option>
+            </select>
+          </div>
+          <button class="draw-button" id="drawButton">
+            <span id="drawButtonText">🎲 สุ่มรางวัล</span>
+          </button>
+          <div class="error-message" id="errorMessage"></div>
+        </div>
+        <div class="stats">
+          <div class="stat-card drawn">
+            <div class="stat-icon">🎁</div>
+            <div class="stat-label">รางวัลที่ถูกจับ</div>
+            <div class="stat-value" id="drawnCount">0/100</div>
+          </div>
+          <div class="stat-card total">
+            <div class="stat-icon">👥</div>
+            <div class="stat-label">ผู้เข้าร่วมทั้งหมด</div>
+            <div class="stat-value" id="totalCount">86</div>
+          </div>
+          <div class="stat-card remaining">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-label">ผู้เข้าร่วมที่เหลือ</div>
+            <div class="stat-value" id="remainingCount">86</div>
+          </div>
+        </div>
+        <div class="results-section" id="resultsSection" style="display: none">
+          <h2 class="results-title">🏆 รายชื่อผู้โชคดี</h2>
+          <div id="resultsList"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-overlay" id="drawingOverlay">
+      <div class="drawing-modal">
+        <div class="sparkles">
+          <span class="sparkle">✨</span> <span class="sparkle">⭐</span>
+          <span class="sparkle">💫</span> <span class="sparkle">🌟</span>
+        </div>
+        <div class="gift-box">🎁</div>
+        <div class="drawing-text">กำลังสุ่มรางวัล...</div>
+        <div class="drawing-subtext">รอสักครู่นะคะ</div>
+      </div>
+    </div>
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-content">
+        <div class="modal-icon">🎉</div>
+        <h2 class="modal-title">ยินดีด้วย!</h2>
+        <div class="modal-info">
+          <div class="modal-info-item">
+            <span class="modal-info-label">ชื่อ:</span>
+            <span class="modal-info-value" id="modalName"></span>
+          </div>
+          <div class="modal-info-item">
+            <span class="modal-info-label">เบอร์:</span>
+            <span class="modal-info-value" id="modalNumber"></span>
+          </div>
+          <div class="modal-info-item">
+            <span class="modal-info-label">รางวัล:</span>
+            <span class="modal-info-value" id="modalPrize"></span>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="modalCloseBtn">ปิด</button>
+      </div>
+    </div>
+    <script>
+      const participants = [
+        "นายพิสุทธิ์ จรุงเรืองทรัพย์",
+        "นายกรรณิญญ์ กานต์ธนิตกุญช์",
+        "นางสาวลักษมณ มั่นคง",
+        "นางสาวณัชชา ถมภาพิทักษ์",
+        "นางสาวไอริณ วงษ์กิจพัฒนา",
+        "นางสาวชุติมา ยิ้มอ่อน",
+        "นายธนัฒน์ สุทธิประชานนท์",
+        "นางสาวชลธิชา ชัยขมพิมาย",
+        "นางนัยนา จันทร์มา",
+        "นางสาวสุดา หมื่นอาจยิ้ม",
+        "นางสาวจิรธิดา ขุนสอาดศรี",
+        "น.ส.นิตยา วารณะ",
+        "น.ส.ภิภาวรรณ ยันตะพานิช",
+        "น.ส.นงลักษณ์ นาคเถื่อน",
+        "น.ส.ณัฐพัชร์ ทองอันตัง",
+        "น.ส.ชลิดา หรูหร่อง",
+        "น.ส.หัทยา อินสล่อม",
+        "น.ส.ปัชยา ทองเมืองหลวง",
+        "น.ส.คชาภรณ์ ดาบแก้ว",
+        "น.ส.จุฑามาศ คงจร",
+        "น.ส.ณัฐณิชา เกิดภาคี",
+        "นายรณกฤต นวลเนาว์",
+        "น.ส.เพชรดา กอสวัสดิ์พัฒน์",
+        "น.ส.ลลิตา ช่อสะอึก",
+        "น.ส.วันทนีย์ สุตการ",
+        "น.ส.สมศรี สวัสดิ์ธารา",
+        "น.ส.สุทธิดา อินอำนวย",
+        "น.ส.ณัชชิกา ค้าขาย",
+        "น.ส.ชนานันท์ วัจนะ",
+        "น.ส.ศุภานันท์ ยุรังกูร",
+        "นางกัญจนีร ศรีเพ็ชร",
+        "น.ส.กฤติยา ด้วงปลี",
+        "น.ส.มารศรี เบ็ญพาด",
+        "น.ส.ธนัชพร บุษกร",
+        "น.ส.ปิยะวรรณ มงคลเดช",
+        "นายคมกฤช ชูช่วง",
+        "น.ส.ภิญญดา สัจยธรรมรังษี",
+        "น.ส.ศิริประภาพร ศรีสงทองดี",
+        "น.ส.วรัชชุเดช ปินกันทา",
+        "น.ส.มณฑา เหลืองกอบกิจ",
+        "น.ส.พิมพ์พิศา มงคลสวรสภณ",
+        "นางสาวณัฐชญา เทพณรงค์",
+        "นางสาวกาญจนา ยี่สุ่นศรี",
+        "นางลูกจันทร์ เทศสมบูรณ์",
+        "นางสาชินี ทองพระสม",
+        "นางนภา เกษมโสต",
+        "นางสุภาพ ดอกเทียน",
+        "นางสุนี เจริญผล",
+        "นางสาวประนอม ไวยิ่งยุทธ์",
+        "นางรดา เปรยเกิด",
+        "นางปราณี เครื่องจันทร์",
+        "น.ส.จิรพรรณ ครุยทอง",
+        "น.ส.จันดากานต์ ติณราช",
+        "น.ส.กุลาพร ทับทิมใส",
+        "นางวิภาวัลย์ ท่าฉลาด",
+        "นายสวรรณ ละอองชัย",
+        "นายสมพงษ์ ขุนประเสริฐ",
+        "นายอนุวัตร กาวิระเดช",
+        "นางสาวปริชมน ใหม่จันทร์ศรี",
+        "นางสาวปาริชาติ ข่าต้น",
+        "นายวเรนทร์ เสือหนู",
+        "นายสันติชัย ใจอดทน",
+        "นางสาวณัฐณิชา กันภัย",
+        "นางสาวพกสรา วัจนะ",
+        "นายนวภูมิ ศรีสังวรณ์",
+        "นางสาวเสาวภา ทรวงมั่น",
+        "นางสาววลัยรัตน์ บ้านกลางคีรีรัฐ",
+        "นายสุรัจ จินดารอง",
+        "นายชนนท์ วาสนาธันธ์",
+        "นางสาวมาลีรัตน์ ร่างรัตนสกุล",
+        "นายสุริยา อุ่มรูปราม",
+        "นางสาวกมลชนก บุญช่วย",
+        "นายอัสราฟ อิสเหาะ",
+        "นางสาวกิรติกา ทองดี",
+        "นายณัฏฐจักร สังกัสทอง",
+        "นางสาวเสาวนีย์ มงคลกาญจนคุณ",
+        "นายกฤตพล เขียนจัตุรัส",
+        "นางสาวกรองกาญจน์ ลีสุขสาม",
+        "นางสาวน้ำเพชร ชาติกลาง",
+        "นายโสภณ อิ่มจิตต์",
+        "นางสาวปิยดา อินทร์ชื่น",
+        "นายสมประสงค์ ทวีศรี",
+        "นางสาวกันยารัตน์ งอนรถ",
+        "นางสาวเกษมศรี นาสวนทัศนีย์",
+      ];
+
+      // รายการของรางวัลที่ผูกกับเลข 1-100
+      const prizes = [
+        "ตู้เย็น Samsung 2 ประตู",
+        "เครื่องซักผ้า LG 15 กก.",
+        "ทีวี LED 55 นิ้ว",
+        "เครื่องปรับอากาศ 18,000 BTU",
+        "iPhone 15 Pro Max",
+        "iPad Air",
+        "Apple Watch Series 9",
+        "MacBook Air M2",
+        "AirPods Pro",
+        "จักรยานเสือภูเขา",
+        "เครื่องดูดฝุ่นไร้สาย Dyson",
+        "หม้อหุงข้าวไฟฟ้า Cuckoo",
+        "เครื่องทำกาแฟ Nespresso",
+        "เครื่องปั่นสมูทตี้ Vitamix",
+        "หม้อทอดลมร้อน Air Fryer",
+        "ไมโครเวฟ Sharp",
+        "เตารีด Philips",
+        "เครื่องฟอกอากาศ Xiaomi",
+        "กล้อง GoPro Hero 12",
+        "Nintendo Switch OLED",
+        "PlayStation 5",
+        "Xbox Series X",
+        "หูฟังไร้สาย Sony WH-1000XM5",
+        "ลำโพง JBL Charge 5",
+        "Smart Watch Garmin",
+        "โดรน DJI Mini 3",
+        "กล้องดิจิตอล Canon M50",
+        "เครื่องพิมพ์ Canon Pixma",
+        "เก้าอี้เกมมิ่ง DXRacer",
+        "โต๊ะทำงานปรับระดับ",
+        "พัดลมไอเย็น",
+        "เครื่องทำน้ำอุ่น",
+        "กระติกน้ำอัจฉริยะ",
+        "กระเป๋าเดินทาง Samsonite",
+        "นาฬิกา Seiko",
+        "กระเป๋าสตางค์ Louis Vuitton",
+        "รองเท้า Nike Air Max",
+        "แว่นตา Ray-Ban",
+        "เสื้อโปโล Lacoste",
+        "กางเกงยีนส์ Levi's",
+        "เข็มขัดหนัง",
+        "ชุดเครื่องนอน 6 ฟุต",
+        "ผ้าห่ม Premium",
+        "หมอนหนุน Memory Foam",
+        "เตียงนอนปรับระดับ",
+        "โซฟา 3 ที่นั่ง",
+        "โต๊ะทานข้าวไม้",
+        "ชั้นวางหนังสือ",
+        "กระจกเงา LED",
+        "โคมไฟตั้งโต๊ะ",
+        "พรมปูพื้น 2x3 เมตร",
+        "ม่านกันแสง UV",
+        "ภาพเขียนลายไทย",
+        "นาฬิกาแขวนผนัง",
+        "แจกันดอกไม้",
+        "ชุดกาน้ำชา",
+        "ชุดแก้วไวน์",
+        "ชุดจานชาม 24 ชิ้น",
+        "หม้อสุกี้ไฟฟ้า",
+        "เตาปิ้งย่าง BBQ",
+        "ชุดมีดครัว",
+        "เครื่องบดกาแฟ",
+        "เครื่องชงชา",
+        "กระติกน้ำร้อน",
+        "เครื่องตีไข่",
+        "ตาชั่งดิจิตอล",
+        "เครื่องซีลสูญญากาศ",
+        "ถังขยะอัจฉริยะ",
+        "ที่กรองน้ำ",
+        "เครื่องทำน้ำแข็ง",
+        "เครื่องบดผลไม้",
+        "เครื่องนึ่งอาหาร",
+        "กระทะไฟฟ้า",
+        "หม้อหุงต้มอเนกประสงค์",
+        "เครื่องทำขนมปัง",
+        "เครื่องทำโยเกิร์ต",
+        "เครื่องทำไอศกรีม",
+        "เครื่องบดเนื้อ",
+        "เครื่องทำโดนัท",
+        "เครื่องปิ้งขนมปัง 4 ช่อง",
+        "กาต้มน้ำไฟฟ้า",
+        "เครื่องทำวาฟเฟิล",
+        "เครื่องอบขนม",
+        "เครื่องบดพริก",
+        "เครื่องสกัดน้ำผลไม้",
+        "ชุดเครื่องครัว",
+        "ชุดอุปกรณ์ทำขนม",
+        "ชุดตะเกียบช้อนส้อม",
+        "ถาดเสิร์ฟอาหาร",
+        "ชุดเบเกอรี่",
+        "เครื่องทำน้ำผลไม้แบบกวด",
+        "เครื่องทำน้ำปั่น",
+        "เครื่องคั้นน้ำส้ม",
+        "ชุดอุปกรณ์ BBQ",
+        "เตาแก๊สพกพา",
+        "ชุดปิกนิก",
+        "กระติกน้ำสูญญากาศ",
+        "บัตรของขวัญ 10,000 บาท",
+        "บัตรของขวัญ 5,000 บาท",
+        "บัตรของขวัญ 3,000 บาท",
+      ];
+
+      let drawnRecords = [];
+      let isDrawing = false;
+
+      const defaultConfig = {
+        main_title: "🎁 จับฉลากของขวัญปีใหม่ 🎁",
+        subtitle: "ลุ้นรางวัลใหญ่ประจำปี 2568",
+        draw_button_text: "🎲 สุ่มรางวัล",
+        background_color: "#667eea",
+        card_background: "#ffffff",
+        button_color: "#f5576c",
+        text_color: "#333333",
+        accent_color: "#764ba2",
+      };
+
+      const dataHandler = {
+        onDataChanged(data) {
+          drawnRecords = data;
+          updateUI();
+        },
+      };
+
+      async function init() {
+        const initResult = await window.dataSdk.init(dataHandler);
+        if (!initResult.isOk) {
+          showError("ไม่สามารถเชื่อมต่อระบบได้");
+          return;
+        }
+
+        populateNameSelect();
+        setupEventListeners();
+      }
+
+      function populateNameSelect() {
+        const select = document.getElementById("nameSelect");
+        participants.forEach((name) => {
+          const option = document.createElement("option");
+          option.value = name;
+          option.textContent = name;
+          select.appendChild(option);
+        });
+      }
+
+      function setupEventListeners() {
+        document
+          .getElementById("drawButton")
+          .addEventListener("click", handleDraw);
+        document
+          .getElementById("modalCloseBtn")
+          .addEventListener("click", closeModal);
+        document
+          .getElementById("modalOverlay")
+          .addEventListener("click", (e) => {
+            if (e.target.id === "modalOverlay") closeModal();
+          });
+      }
+
+      async function handleDraw() {
+        const selectedName = document.getElementById("nameSelect").value;
+
+        if (!selectedName) {
+          showError("กรุณาเลือกชื่อผู้เข้าร่วม");
+          return;
+        }
+
+        const alreadyDrawn = drawnRecords.find((r) => r.name === selectedName);
+        if (alreadyDrawn) {
+          showError(
+            `${selectedName} ได้รับรางวัลไปแล้ว (เบอร์ ${alreadyDrawn.prize_number}: ${alreadyDrawn.prize_name})`
+          );
+          return;
+        }
+
+        if (drawnRecords.length >= 100) {
+          showError("รางวัลถูกจับครบทั้งหมดแล้ว (100 รางวัล)");
+          return;
+        }
+
+        if (drawnRecords.length >= 999) {
+          showError("ถึงขีดจำกัดการจัดเก็บข้อมูลแล้ว");
+          return;
+        }
+
+        await performDraw(selectedName);
+      }
+
+      async function performDraw(selectedName) {
+        const button = document.getElementById("drawButton");
+        const buttonText = document.getElementById("drawButtonText");
+
+        isDrawing = true;
+        button.disabled = true;
+        buttonText.innerHTML =
+          '<span class="loading-spinner"></span> กำลังสุ่ม...';
+        hideError();
+
+        showDrawingAnimation();
+
+        await new Promise((resolve) => setTimeout(resolve, 2500));
+
+        // สุ่มเลขรางวัลจากเลขที่ยังไม่ถูกจับ
+        const drawnNumbers = new Set(drawnRecords.map((r) => r.prize_number));
+        const availableNumbers = [];
+        for (let i = 1; i <= 100; i++) {
+          if (!drawnNumbers.has(i)) {
+            availableNumbers.push(i);
+          }
+        }
+
+        const randomIndex = Math.floor(Math.random() * availableNumbers.length);
+        const prizeNumber = availableNumbers[randomIndex];
+        const prizeName = prizes[prizeNumber - 1];
+
+        const newRecord = {
+          timestamp: new Date().toISOString(),
+          name: selectedName,
+          prize_number: prizeNumber,
+          prize_name: prizeName,
+        };
+
+        const createResult = await window.dataSdk.create(newRecord);
+
+        hideDrawingAnimation();
+
+        if (createResult.isOk) {
+          showModal(selectedName, prizeNumber, prizeName);
+          await sendNotification(selectedName, prizeNumber, prizeName);
+          document.getElementById("nameSelect").value = "";
+        } else {
+          showError("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
+        }
+
+        button.disabled = false;
+        buttonText.textContent = defaultConfig.draw_button_text;
+        isDrawing = false;
+      }
+
+      function showDrawingAnimation() {
+        document.getElementById("drawingOverlay").classList.add("active");
+      }
+
+      function hideDrawingAnimation() {
+        document.getElementById("drawingOverlay").classList.remove("active");
+      }
+
+      async function sendNotification(name, number, prize) {
+        const timestamp = new Date().toLocaleString("th-TH");
+        const message = `🎉 ประกาศผู้โชคดี!\n\n⏰ เวลา: ${timestamp}\n👤 ชื่อ-นามสกุล: ${name}\n🎫 เบอร์: ${number}\n🎁 รางวัล: ${prize}`;
+
+        const payload = {
+          messages: [
+            {
+              type: "text",
+              text: message,
+            },
+          ],
+        };
+
+        try {
+          const response = await fetch(
+            "https://morpromt2f.moph.go.th/api/notify/send",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "client-key": "5494493242fd5ff380af3b51f7aa7a47fc075171",
+                "secret-key": "4NXFT5AVL6UF3YRDVEFIIV2GKKCQ",
+              },
+              body: JSON.stringify(payload),
+            }
+          );
+
+          if (!response.ok) {
+            console.error("Failed to send notification");
+          }
+        } catch (error) {
+          console.error("Error sending notification:", error);
+        }
+      }
+
+      function showModal(name, number, prize) {
+        document.getElementById("modalName").textContent = name;
+        document.getElementById("modalNumber").textContent = `เบอร์ ${number}`;
+        document.getElementById("modalPrize").textContent = prize;
+        document.getElementById("modalOverlay").classList.add("active");
+      }
+
+      function closeModal() {
+        document.getElementById("modalOverlay").classList.remove("active");
+      }
+
+      function updateUI() {
+        const sortedRecords = [...drawnRecords].sort(
+          (a, b) => b.prize_number - a.prize_number
+        );
+
+        const resultsList = document.getElementById("resultsList");
+        resultsList.innerHTML = "";
+
+        sortedRecords.forEach((record, index) => {
+          const item = document.createElement("div");
+          item.className = "result-item";
+          item.style.animationDelay = `${index * 0.1}s`;
+          item.innerHTML = `
+          <div class="result-number">${record.prize_number}</div>
+          <div class="result-details">
+            <div class="result-name">${record.name}</div>
+            <div class="result-prize">🎁 ${record.prize_name}</div>
+          </div>
+        `;
+          resultsList.appendChild(item);
+        });
+
+        const resultsSection = document.getElementById("resultsSection");
+        resultsSection.style.display =
+          drawnRecords.length > 0 ? "block" : "none";
+
+        const drawnNames = new Set(drawnRecords.map((r) => r.name));
+        const remainingParticipants = participants.filter(
+          (name) => !drawnNames.has(name)
+        ).length;
+
+        document.getElementById(
+          "drawnCount"
+        ).textContent = `${drawnRecords.length}/100`;
+        document.getElementById(
+          "totalCount"
+        ).textContent = `${participants.length}`;
+        document.getElementById(
+          "remainingCount"
+        ).textContent = `${remainingParticipants}`;
+
+        updateNameDropdown();
+      }
+
+      function updateNameDropdown() {
+        const nameSelect = document.getElementById("nameSelect");
+        const currentName = nameSelect.value;
+        const drawnNames = new Set(drawnRecords.map((r) => r.name));
+
+        nameSelect.innerHTML = '<option value="">-- กรุณาเลือกชื่อ --</option>';
+        participants.forEach((name) => {
+          if (!drawnNames.has(name)) {
+            const option = document.createElement("option");
+            option.value = name;
+            option.textContent = name;
+            nameSelect.appendChild(option);
+          }
+        });
+
+        if (!drawnNames.has(currentName)) {
+          nameSelect.value = currentName;
+        }
+      }
+
+      function showError(message) {
+        const errorEl = document.getElementById("errorMessage");
+        errorEl.textContent = message;
+        errorEl.classList.add("active");
+      }
+
+      function hideError() {
+        document.getElementById("errorMessage").classList.remove("active");
+      }
+
+      async function onConfigChange(config) {
+        document.getElementById("mainTitle").textContent =
+          config.main_title || defaultConfig.main_title;
+        document.getElementById("subtitle").textContent =
+          config.subtitle || defaultConfig.subtitle;
+        document.getElementById("drawButtonText").textContent =
+          config.draw_button_text || defaultConfig.draw_button_text;
+      }
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities: (config) => ({
+            recolorables: [
+              {
+                get: () =>
+                  config.background_color || defaultConfig.background_color,
+                set: (value) => {
+                  config.background_color = value;
+                  window.elementSdk.setConfig({ background_color: value });
+                },
+              },
+              {
+                get: () =>
+                  config.card_background || defaultConfig.card_background,
+                set: (value) => {
+                  config.card_background = value;
+                  window.elementSdk.setConfig({ card_background: value });
+                },
+              },
+              {
+                get: () => config.button_color || defaultConfig.button_color,
+                set: (value) => {
+                  config.button_color = value;
+                  window.elementSdk.setConfig({ button_color: value });
+                },
+              },
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined,
+          }),
+          mapToEditPanelValues: (config) =>
+            new Map([
+              ["main_title", config.main_title || defaultConfig.main_title],
+              ["subtitle", config.subtitle || defaultConfig.subtitle],
+              [
+                "draw_button_text",
+                config.draw_button_text || defaultConfig.draw_button_text,
+              ],
+            ]),
+        });
+      }
+
+      init();
+    </script>
+    <script>
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML =
+              "window.__CF$cv$params={r:'9aa9b77344ed97fb',t:'MTc2NTE3MDIxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1;
+          a.width = 1;
+          a.style.position = "absolute";
+          a.style.top = 0;
+          a.style.left = 0;
+          a.style.border = "none";
+          a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener)
+            document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) {
+              e(b);
+              "loading" !== document.readyState &&
+                ((document.onreadystatechange = e), c());
+            };
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>
