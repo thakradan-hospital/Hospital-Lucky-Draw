@@ -1086,7 +1086,29 @@
         },
       };
 
+      async function loadDrawnFromGoogleSheet() {
+        try {
+          const res = await fetch(GOOGLE_SHEET_URL);
+          const data = await res.json();
+
+          if (Array.isArray(data)) {
+            drawnRecords = data.map((item) => ({
+              timestamp: item.timestamp,
+              name: item.name,
+              prize_number: Number(item.prize_number),
+              prize_name: item.prize_name,
+            }));
+
+            updateUI(); // ✅ อัปเดต dropdown + รายการผู้โชคดีอัตโนมัติ
+          }
+        } catch (err) {
+          console.error("❌ โหลดข้อมูลจาก Google Sheet ไม่สำเร็จ:", err);
+        }
+      }
       async function init() {
+        // ✅ โหลดรายชื่อที่เคยสุ่มแล้วจาก Google Sheet
+        await loadDrawnFromGoogleSheet();
+
         // ✅ โหมด GitHub / Offline
         if (!window.dataSdk) {
           populateNameSelect();
@@ -1094,7 +1116,6 @@
           return;
         }
 
-        // ✅ เผื่อกรณีมี Backend จริง
         const initResult = await window.dataSdk.init(dataHandler);
         if (!initResult.isOk) {
           populateNameSelect();
