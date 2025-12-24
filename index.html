@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>จับฉลากของขวัญปีใหม่</title>
+    <title>จับฉลากของขวัญปีใหม่ 2568</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -809,6 +809,16 @@
         </div>
         <div class="card">
           <div class="form-group">
+            <label class="form-label" for="nameSearch"
+              >ค้นหาชื่อผู้เข้าร่วม</label
+            >
+            <input
+              type="text"
+              id="nameSearch"
+              class="form-select mb-3"
+              placeholder="พิมพ์ชื่อเพื่อค้นหา..."
+            />
+
             <label class="form-label" for="nameSelect"
               >เลือกชื่อผู้เข้าร่วม</label
             >
@@ -872,6 +882,11 @@
         <button class="modal-close-btn" id="modalCloseBtn">ปิด</button>
       </div>
     </div>
+    <!-- 🔊 เสียงแสดงความยินดี -->
+    <audio id="winSound" preload="auto">
+      <source src="./airhorn.mp3" type="audio/mpeg" />
+    </audio>
+
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
       import {
@@ -1154,6 +1169,9 @@
           .addEventListener("click", (e) => {
             if (e.target.id === "modalOverlay") closeModal();
           });
+        document.getElementById("nameSearch").addEventListener("input", (e) => {
+          filterNameDropdown(e.target.value);
+        });
       }
 
       async function handleDraw() {
@@ -1271,7 +1289,7 @@
 
       async function sendNotification(name, number, prize) {
         const timestamp = new Date().toLocaleString("th-TH");
-        const message = `🎉 ประกาศผู้โชคดี!\n\n⏰ เวลา: ${timestamp}\n👤 ชื่อ-นามสกุล: ${name}\n🎫 เบอร์: ${number}\n🎁 รางวัล: ${prize}`;
+        const message = `🎉 ประกาศผู้โชคดี!\n\n⏰ เวลา: ${timestamp}\n👤 ชื่อ: ${name}\n🎫 เบอร์: ${number}\n🎁 รางวัล: ${prize}`;
 
         const payload = {
           messages: [
@@ -1308,6 +1326,13 @@
         document.getElementById("modalName").textContent = name;
         document.getElementById("modalNumber").textContent = `เบอร์ ${number}`;
         document.getElementById("modalPrize").textContent = prize;
+
+        // 🔊 เล่นเสียงตอนถูกรางวัล
+        const sound = document.getElementById("winSound");
+        if (sound) {
+          sound.currentTime = 0; // เริ่มใหม่ทุกครั้ง
+          sound.play().catch(() => {});
+        }
         document.getElementById("modalOverlay").classList.add("active");
       }
 
@@ -1379,6 +1404,26 @@
         }
       }
 
+      function filterNameDropdown(keyword) {
+        const nameSelect = document.getElementById("nameSelect");
+        const drawnNames = new Set(drawnRecords.map((r) => r.name));
+
+        nameSelect.innerHTML = '<option value="">-- กรุณาเลือกชื่อ --</option>';
+
+        participants
+          .filter(
+            (name) =>
+              !drawnNames.has(name) &&
+              name.toLowerCase().includes(keyword.toLowerCase())
+          )
+          .forEach((name) => {
+            const option = document.createElement("option");
+            option.value = name;
+            option.textContent = name;
+            nameSelect.appendChild(option);
+          });
+      }
+
       function showError(message) {
         const errorEl = document.getElementById("errorMessage");
         errorEl.textContent = message;
@@ -1443,7 +1488,6 @@
             ]),
         });
       }
-
       document.addEventListener("DOMContentLoaded", init);
     </script>
     <script>
