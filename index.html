@@ -882,10 +882,9 @@
         <button class="modal-close-btn" id="modalCloseBtn">ปิด</button>
       </div>
     </div>
-    <!-- 🔊 เสียงแสดงความยินดี -->
-    <audio id="winSound" preload="auto">
-      <source src="./airhorn.mp3" type="audio/mpeg" />
-    </audio>
+    <!-- 🔊 เสียง-->
+    <audio id="winSound" preload="auto"><source src="./airhorn.mp3" type="audio/mpeg" /></audio>
+    <audio id="clickSound" src="./dice.mp3" preload="auto"></audio>
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
@@ -1175,6 +1174,13 @@
       }
 
       async function handleDraw() {
+        // 🔊 เสียงตอนกดปุ่มสุ่ม
+  const click = document.getElementById("clickSound");
+  if (click) {
+    click.currentTime = 0;
+    click.volume = 0.6;
+    click.play().catch(() => {});
+  }
         const selectedName = document.getElementById("nameSelect").value;
 
         if (!selectedName) {
