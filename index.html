@@ -883,7 +883,9 @@
       </div>
     </div>
     <!-- 🔊 เสียง-->
-    <audio id="winSound" preload="auto"><source src="./airhorn.mp3" type="audio/mpeg" /></audio>
+    <audio id="winSound" preload="auto">
+      <source src="./airhorn.mp3" type="audio/mpeg" />
+    </audio>
     <audio id="clickSound" src="./dice.mp3" preload="auto"></audio>
 
     <script type="module">
@@ -1175,12 +1177,12 @@
 
       async function handleDraw() {
         // 🔊 เสียงตอนกดปุ่มสุ่ม
-  const click = document.getElementById("clickSound");
-  if (click) {
-    click.currentTime = 0;
-    click.volume = 0.6;
-    click.play().catch(() => {});
-  }
+        const click = document.getElementById("clickSound");
+        if (click) {
+          click.currentTime = 0;
+          click.volume = 0.6;
+          click.play().catch(() => {});
+        }
         const selectedName = document.getElementById("nameSelect").value;
 
         if (!selectedName) {
@@ -1333,12 +1335,26 @@
         document.getElementById("modalNumber").textContent = `เบอร์ ${number}`;
         document.getElementById("modalPrize").textContent = prize;
 
-        // 🔊 เล่นเสียงตอนถูกรางวัล
         const sound = document.getElementById("winSound");
+
         if (sound) {
-          sound.currentTime = 0; // เริ่มใหม่ทุกครั้ง
-          sound.play().catch(() => {});
+          sound.currentTime = 0;
+          sound.onended = null;
+
+          sound
+            .play()
+            .then(() => {
+              sound.onended = () => {
+                speakResult(number, sound.volume); // 🔊 ดังเท่ากัน
+              };
+            })
+            .catch(() => {
+              speakResult(number, sound.volume);
+            });
+        } else {
+          speakResult(number);
         }
+
         document.getElementById("modalOverlay").classList.add("active");
       }
 
@@ -1447,6 +1463,23 @@
           config.subtitle || defaultConfig.subtitle;
         document.getElementById("drawButtonText").textContent =
           config.draw_button_text || defaultConfig.draw_button_text;
+      }
+
+      function speakResult(number, volume = 1) {
+        if (!("speechSynthesis" in window)) return;
+
+        const utterance = new SpeechSynthesisUtterance(`เบอร์ ${number}`);
+        utterance.lang = "th-TH";
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        utterance.volume = volume; // 🔊 ใช้ระดับเสียงเดียวกัน
+
+        const voices = speechSynthesis.getVoices();
+        const thaiVoice = voices.find((v) => v.lang === "th-TH");
+        if (thaiVoice) utterance.voice = thaiVoice;
+
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
       }
 
       if (window.elementSdk) {
